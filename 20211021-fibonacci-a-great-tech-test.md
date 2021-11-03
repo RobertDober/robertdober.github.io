@@ -1,6 +1,26 @@
-# Musing About _Obvious_ Things
+# So you want to make a poor candidate to implement the Fibonacci function
 
-## How to pass or fail the fibonacci coding test (or why it should not be given, or how it should be given)
+#### Beware here be dragons
+
+Firstly tech tests are _very often_ a complete waste of time and sometimes outright damaging to your
+attempt to find a good candidate for your opening.
+
+And a _good_ tech test is a very involved project because you want to simulate the
+real world conditions of the job in question which is at least challenging if not absolutely impossible.
+
+Assuming you succeeded in doing so, you still get only a snapshot of your candidates abilities, it is like
+criticizing a movie from one frame, although I guess that some critics work exactly in that way...
+
+But just for the sake of the argument let us explore would could/should/might happen if you give such tech tests
+and you decide to use _Fibonacci Numbers_ for that purpose...
+
+Did I already mention? _Here be dragons_
+
+## The one response where you just might get lucky and eliminate a bad candidate
+
+is when you get this response
+
+, but let us generously overlook that fact
 
 So we want to have a function fibo(n) so that
 
