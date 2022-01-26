@@ -73,7 +73,7 @@ dislikes the unnecessary multiplications in your algorithm (actually 3/8 are unn
 
 ### Passing with style
 
-There are two key observations about the matrixes we use:
+There are two key observations about the matrices we use:
 
 1. They are all of the form `((a, b), (b, c))`, therefore  we can write the product of such matrices as
 
@@ -127,10 +127,40 @@ Now wait a minute, how many multiplications do we have to calculate `pow(@base, 
 `log(n)` for Multiplication #1 and Multiplication #2 is executed for each 1 digit in the binary
 representation of `n`.
 
-So the costly case is `n = 2^k - 1` and by substracting 1 from n we might just hit that case from the ideal case `n = 2^k - 1`
-However there seems to be no amortisation for that worst case scenario because by substracting 1 from `2^k - 1` we only save one 1 in
+So the costly case is `n = 2^k - 1` and by subtracting 1 from n we might just hit that case from the ideal case `n = 2^k - 1`
+However there seems to be no amortisation for that worst case scenario because by subtracting 1 from `2^k - 1` we only save one 1 in
 the digital representation of n.
-If we look at it in a different way it becomes even clearer, substracting 1 from a binary number can at most remove one 1 but add
+
+Well this is not a valid argument, as we will add n+1 `1`s in one case, but remove one `1` in many cases, let us have a look to get a better 
+understanding of this:
+
+     n |  Number of 1's in n |   n-1     |      Number of 1's in n-1  |    gain/loss
+     --|---------------------|-----------|----------------------------|----------------
+   10000  |   1              | 1111      |           4                | -3
+    1111  |   4              | 1110      |           3                |  1
+    1110  |   3              | 1101      |           3                |  0
+    1101  |   3              | 1100      |           2                |  1
+    1100  |   2              | 1011      |           3                | -1
+    1011  |   3              | 1010      |           2                |  1
+    1010  |   2              | 1001      |           2                |  0
+    1001  |   2              | 1000      |           1                |  1
+                                                              SUM:       0
+
+so we do get amortisation (which could probably also be seen by a statistical argument)
+
+However we have the luxury that we can chose any k near n and in the following sense:
+
+   fibo(n) = {1, 1, 0}^n -> take middle element or
+   fibo(n) = {1, 1, 0}^(n-1) -> take first element or
+   fibo(n) = {1, 1, 0}^(n+1) -> take last element
+
+With that information in hand it might turn out interesting to see if calculating which of these three numbers has the least 1s and use it for
+our calculation might be a real winner for large `n`s, especially as this is **one** instruction on modern chipsets, or at least a very 
+efficient calculation.
+
+That said, you might not have access to this efficient implementation in the language you are using though.
+
+If we look at it in a different way it becomes even clearer, subtracting 1 from a binary number can at most remove one 1 but add
 an arbitrary amount to it.
 
 If we follow this logic we still made a _stupid_ mistake, but the other way round, seems that we should have computed
@@ -141,7 +171,7 @@ If we follow this logic we still made a _stupid_ mistake, but the other way roun
 
 The solution using matrix multiplication seems very elegant and asymptotically efficient.
 However by reflecting on the special properties of these matrices we can come up with a
-simpler algebra of a multiplicative representation of fibonacci numbers that allow for
+simpler algebra of a multiplicative representation of Fibonacci Numbers that allow for
 `O(log(n))` complexity algorithms based on the nth power.
 
 But proposing even that algorithm without either clarifying what kind of optimality is looked for, space or runtime, or
